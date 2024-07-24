@@ -5,11 +5,11 @@ const data = readFileSync('./1-input.dat', { encoding: 'utf8' })
 	.split('\n');
 
 const index = () => {
-	for (let i = 0; i < Math.floor(data1.length / 4) + 1; i++) {
-		const opcode = data1[i * 4];
-		const operand1 = data1[i * 4 + 1];
-		const operand2 = data1[i * 4 + 2];
-		const address = data1[i * 4 + 3];
+	for (let i = 0; i < data1.length + 1; i += 4) {
+		const opcode = data1[i];
+		const operand1 = data1[i + 1];
+		const operand2 = data1[i + 2];
+		const address = data1[i + 3];
 		console.log(opcode, operand1, operand2, address);
 	}
 };
