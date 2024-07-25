@@ -1,4 +1,4 @@
-const { readFileSync } = require('node:fs');
+const { readFileSync } = require("node:fs");
 
 const createSet = (wire, cb) => {
 	const cord = { y: 0, x: 0 };
@@ -7,15 +7,15 @@ const createSet = (wire, cb) => {
 		const code = wire[i];
 		const direction = code[0];
 		const distance = Number(code.slice(1));
-		const step = direction === 'D' || direction === 'L' ? -1 : 1;
+		const step = direction === "D" || direction === "L" ? -1 : 1;
 
 		for (let j = 0; j < distance; j++) {
-			if (direction === 'U' || direction === 'D') {
+			if (direction === "U" || direction === "D") {
 				cord.y += step;
-			} else if (direction === 'R' || direction === 'L') {
+			} else if (direction === "R" || direction === "L") {
 				cord.x += step;
 			} else {
-				console.log('error with direction');
+				console.log("error with direction");
 			}
 			const cordString = JSON.stringify(cord, Object.keys(cord).sort());
 			cb(cord, cordString);
@@ -24,11 +24,11 @@ const createSet = (wire, cb) => {
 };
 
 const index = () => {
-	const data = readFileSync('./3-input.dat', { encoding: 'utf8' });
+	const data = readFileSync("./2019/3-input.dat", { encoding: "utf8" });
 
-	const wires = data.trim().split('\n');
-	const wireA = wires[0].trim().split(',');
-	const wireB = wires[1].trim().split(',');
+	const wires = data.trim().split("\n");
+	const wireA = wires[0].trim().split(",");
+	const wireB = wires[1].trim().split(",");
 	const matches = [];
 	const wireASet = new Set();
 
