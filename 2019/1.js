@@ -15,14 +15,15 @@ const getTotalFuel = (mass) => {
 };
 
 const index = async () => {
-	const data = await readFile('./1-input.dat', { encoding: 'utf8' });
-	const arr = data.trim().split('\n');
+	const data = await readFile('./1-input.dat', { encoding: 'utf8' })
+		.trim()
+		.split('\n');
 
-	const fuelReq1 = arr.reduce((pVal, cVal) => {
+	const fuelReq1 = data.reduce((pVal, cVal) => {
 		return pVal + fuelCalc(cVal);
 	}, 0);
 
-	const fuelReq2 = arr.reduce((pVal, cVal) => {
+	const fuelReq2 = data.reduce((pVal, cVal) => {
 		return pVal + getTotalFuel(cVal);
 	}, 0);
 
