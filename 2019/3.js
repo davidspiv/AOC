@@ -1,7 +1,8 @@
 const { readFileSync } = require('node:fs');
 
-const createSet = (wire, cb) => {
-	const cord = { y: 0, x: 0 };
+const createStepArr = (wire) => {
+	const cord = { y: 0, x: 0, dist: 0 };
+	const outputArr = [];
 
 	for (let i = 0; i < wire.length; i++) {
 		const code = wire[i];
@@ -17,34 +18,42 @@ const createSet = (wire, cb) => {
 			} else {
 				console.log('error with direction');
 			}
-			const cordString = JSON.stringify(cord, Object.keys(cord).sort());
-			cb(cord, cordString);
+			outputArr.push({ ...cord });
 		}
 	}
+
+	return outputArr;
 };
 
 const index = () => {
-	const data = readFileSync('./3-input.dat', { encoding: 'utf8' });
-
-	const wires = data.trim().split('\n');
-	const wireA = wires[0].trim().split(',');
-	const wireB = wires[1].trim().split(',');
 	const matches = [];
-	const wireASet = new Set();
 
-	const build = (cord, cordString) => {
-		wireASet.add(cordString);
-	};
+	const data = readFileSync('./2019/3-input.dat', { encoding: 'utf8' });
 
-	const verify = (cord, cordString) => {
-		if (wireASet.has(cordString)) {
-			const manhattanDistance = Math.abs(cord.y) + Math.abs(cord.x);
-			matches.push(manhattanDistance);
+	const wires = data.split('\n');
+	const wireA = wires[0].split(',');
+	const wireB = wires[1].split(',');
+
+	const wireAArr = createStepArr(wireA);
+	const wireBArr = createStepArr(wireB);
+
+	const verify = (cord) => {
+		for (let i = 0; i < wireBArr.length; i++) {
+			const isMatch = wireBArr[i].x === cord.x && wireBArr[i].y === cord.y;
+			if (isMatch) return i;
 		}
+		return 0;
 	};
 
-	createSet(wireA, build);
-	createSet(wireB, verify);
+	for (let i = 0; i < wireAArr.length; i++) {
+		const cord = wireAArr[i];
+		const isMatch = verify(cord);
+		if (isMatch) {
+			// const manhattanDistance = Math.abs(cord.x) + Math.abs(cord.y);
+			const wireLength = i + isMatch + 2;
+			matches.push(wireLength);
+		}
+	}
 
 	const closestMatch = matches.reduce((pVal, cVal) => {
 		return pVal < cVal ? pVal : cVal;
