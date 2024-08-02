@@ -1,21 +1,25 @@
 let count = 0;
 
 const verified = (pass) => {
-	const unique = new Set();
-	let duplicateBool = false;
+	const unique = {};
 	for (let i = 0; i < pass.length; i++) {
+		const el = pass[i] * 1;
+
 		if (i) {
-			if (Number.parseInt(pass[i]) < Number.parseInt(pass[i - 1])) {
+			if (el < pass[i - 1] * 1) {
 				return false;
 			}
 		}
-		if (unique.has(Number.parseInt(pass[i]))) {
-			duplicateBool = true;
-		}
-		unique.add(Number.parseInt(pass[i]));
+
+		if (!unique[el]) unique[el] = 0;
+		unique[el]++;
 	}
-	if (!duplicateBool) return false;
-	return true;
+
+	for (const key in unique) {
+		if (unique[key] === 2) return true;
+	}
+
+	return false;
 };
 
 for (let i = 124075; i < 580770; i++) {
