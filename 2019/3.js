@@ -1,7 +1,7 @@
 const { readFileSync } = require("node:fs");
 
 const createSet = (wire, cb) => {
-	const cord = { y: 0, x: 0 };
+	const cord = { y: 0, x: 0, distance: 0 };
 
 	for (let i = 0; i < wire.length; i++) {
 		const code = wire[i];
@@ -17,6 +17,7 @@ const createSet = (wire, cb) => {
 			} else {
 				console.log("error with direction");
 			}
+			cord.distance++;
 			const cordString = JSON.stringify(cord, Object.keys(cord).sort());
 			cb(cord, cordString);
 		}
@@ -37,6 +38,9 @@ const index = () => {
 	};
 
 	const verify = (cord, cordString) => {
+		const cordStringA = cordString.slice(cordString0.indexOf("x"));
+		const cordStringB = cordString.slice(cordString0.indexOf("x"));
+
 		if (wireASet.has(cordString)) {
 			const manhattanDistance = Math.abs(cord.y) + Math.abs(cord.x);
 			matches.push(manhattanDistance);
