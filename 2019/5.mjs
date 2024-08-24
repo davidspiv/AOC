@@ -6,60 +6,91 @@ const data = readFileSync('./2019/5-input.dat', { encoding: 'utf8' })
 
 const programArr = data.map((val) => val * 1);
 
-// const programArr = [3, 0, 4, 0, 99];
-
-const input = 1;
+const input = 5;
 
 const getParamA = (i, isImmediateMode) => {
+	const el = programArr[i + 1];
 	if (isImmediateMode) {
-		return programArr[i + 1];
+		return el;
 	}
-	const parameterAddressA = programArr[i + 1];
-	return programArr[parameterAddressA];
+	return programArr[el];
 };
 
 const getParamB = (i, isImmediateMode) => {
+	const el = programArr[i + 2];
 	if (isImmediateMode) {
-		return programArr[i + 2];
+		return el;
 	}
-	const parameterAddressB = programArr[i + 2];
-	return programArr[parameterAddressB];
+	return programArr[el];
 };
 
-const processOpcode = (i) => {
-	const opcode = programArr[i].toString().slice(-2) * 1;
+const processOpcode = (index) => {
+	const opcode = programArr[index].toString().slice(-2) * 1;
 
-	const modesArr = programArr[i]
+	const modesArr = programArr[index]
 		.toString()
 		.slice(0, -2)
 		.split('')
 		.reverse()
 		.map((val) => val * 1);
 
-	const paramA = getParamA(i, modesArr[0]);
-	const paramB = getParamB(i, modesArr[1]);
+	const paramA = getParamA(index, modesArr[0]);
+	const paramB = getParamB(index, modesArr[1]);
+	const paramC = programArr[index + 3];
 
 	switch (opcode) {
-		case 99:
-			return -1;
-
-		case 3:
-			programArr[programArr[i + 1]] = input;
-			return 2;
-
-		case 4:
-			console.log(paramA);
-			return 2;
-
 		case 1: {
-			programArr[programArr[i + 3]] = paramA + paramB;
-			return 4;
+			programArr[paramC] = paramA + paramB;
+			return index + 4;
 		}
 
 		case 2: {
-			programArr[programArr[i + 3]] = paramA * paramB;
-			return 4;
+			programArr[paramC] = paramA * paramB;
+			return index + 4;
 		}
+
+		case 3:
+			programArr[programArr[index + 1]] = input;
+			return index + 2;
+
+		case 4:
+			console.log(paramA);
+			return index + 2;
+
+		case 5: {
+			if (paramA) {
+				return paramB;
+			}
+			return index + 3;
+		}
+
+		case 6: {
+			if (!paramA) {
+				return paramB;
+			}
+			return index + 3;
+		}
+
+		case 7: {
+			if (paramA < paramB) {
+				programArr[paramC] = 1;
+			} else {
+				programArr[paramC] = 0;
+			}
+			return index + 4;
+		}
+
+		case 8: {
+			if (paramA === paramB) {
+				programArr[paramC] = 1;
+			} else {
+				programArr[paramC] = 0;
+			}
+			return index + 4;
+		}
+
+		case 99:
+			return -1;
 
 		default:
 			console.log('Unrecognized opcode', opcode);
@@ -68,12 +99,10 @@ const processOpcode = (i) => {
 };
 
 const testInputs = () => {
-	let nextOpcodeIndex = 0;
-	for (let i = 0; i < programArr.length; i++) {
-		if (i !== nextOpcodeIndex) continue;
-		const step = processOpcode(i);
-		if (step < 0) return;
-		nextOpcodeIndex = i + step;
+	let opcodeIndex = 0;
+	while (opcodeIndex !== undefined && opcodeIndex >= 0) {
+		// console.log(programArr[opcodeIndex], programArr);
+		opcodeIndex = processOpcode(opcodeIndex);
 	}
 };
 
