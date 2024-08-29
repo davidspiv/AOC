@@ -37,7 +37,7 @@ int process(String data) {
 }
 
 int main() {
-  const String data = getDataFromFile("1.dat");
+  const String data = getDataFromFile("./2015/1.dat");
   const int floor = process(data);
   display(floor);
 }

@@ -75,7 +75,7 @@ Result calcTotal(String fileName) {
 }
 
 int main() {
-  const Result result = calcTotal("2.dat");
+  const Result result = calcTotal("./2015/2.dat");
   display("Wrapping paper (sqft): ", 0);
   display(result.wrappingPaperTotal);
   display("Ribbon (ft): ", 0);
