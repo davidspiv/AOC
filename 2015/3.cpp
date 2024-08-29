@@ -30,43 +30,38 @@ String getDataFromFile(String fileName) {
 }
 
 int main() {
-  const String data = getDataFromFile("3.dat");
+  const String data = getDataFromFile("./2015/3.dat");
 
   String locationHistory[data.length()];
-  locationHistory[0] = "0/0/0/0";
+  locationHistory[0] = "0/0";
 
-  int uniqueCount = 0;
+  int uniqueCount = 1;
 
   for (size_t i = 0; i < data.length() - 1; i++) {
     String location = locationHistory[i];
 
-    String northToken = location.substr(0, location.find('/'));
-    location.erase(0, northToken.length() + 1);
-    String southToken = location.substr(0, location.find('/'));
-    location.erase(0, southToken.length() + 1);
-    String eastToken = location.substr(0, location.find('/'));
-    location.erase(0, eastToken.length() + 1);
-    String westToken = location.substr(0, location.find('/'));
+    String tokenX = location.substr(0, location.find('/'));
+    location.erase(0, tokenX.length() + 1);
+    String tokenY = location.substr(0, location.find('/'));
 
     switch (data[i]) {
       case '^':
-        northToken = std::to_string(stoi(northToken) + 1);
+        tokenY = std::to_string(stoi(tokenY) + 1);
         break;
       case 'v':
-        southToken = std::to_string(stoi(southToken) + 1);
+        tokenY = std::to_string(stoi(tokenY) - 1);
         break;
       case '<':
-        westToken = std::to_string(stoi(westToken) + 1);
+        tokenX = std::to_string(stoi(tokenX) + 1);
         break;
       case '>':
-        eastToken = std::to_string(stoi(eastToken) + 1);
+        tokenX = std::to_string(stoi(tokenX) - 1);
         break;
       default:
         return 1;
     }
 
-    const String nextLocation =
-        northToken + '/' + southToken + '/' + eastToken + '/' + westToken;
+    const String nextLocation = tokenX + '/' + tokenY;
 
     uniqueCount++;
 
@@ -79,6 +74,5 @@ int main() {
 
     locationHistory[i + 1] = nextLocation;
   }
-
   display(uniqueCount);
 }
