@@ -15,7 +15,7 @@ const getTotalFuel = (mass) => {
 };
 
 const index = async () => {
-	const data = await readFile('./1-input.dat', { encoding: 'utf8' })
+	const data = await readFile('./1_input.dat', { encoding: 'utf8' })
 		.trim()
 		.split('\n');
 

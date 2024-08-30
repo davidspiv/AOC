@@ -4,6 +4,11 @@
 
 using String = std::string;
 
+union Output {
+  int resultAsInt;
+  String resultAsString;
+};
+
 void display(const int &output, bool returnFlag = 1) {
   if (returnFlag) {
     std::cout << output << std::endl;
@@ -21,11 +26,19 @@ void display(const String &output, bool returnFlag = 1) {
 }
 
 bool testA(const String &inputToTest) {
-  if (inputToTest.length() > 5) {
+  int count = 0;
+  char sub = 'a';
+  size_t pos = inputToTest.find(sub, 0);
+  while (pos != String::npos) {
+    count++;
+    pos = inputToTest.find(sub, pos + 1);
+  }
+  if (count > 3) {
     return false;
   }
   return true;
 }
+
 bool testB(const String &inputToTest) { return true; }
 bool testC(const String &inputToTest) { return true; }
 

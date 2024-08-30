@@ -1,6 +1,6 @@
 const { readFileSync } = require('node:fs');
 
-const data = readFileSync('./2-input.dat', { encoding: 'utf8' })
+const data = readFileSync('./2_input.dat', { encoding: 'utf8' })
 	.trim()
 	.split(',');
 
