@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 
-const data = readFileSync('./2019/5-input.dat', { encoding: 'utf8' })
+const data = readFileSync('./2019/5_input.dat', { encoding: 'utf8' })
 	.trim()
 	.split(',');
 
