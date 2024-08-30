@@ -34,6 +34,7 @@ int main() {
 
   String locationHistory[data.length()];
   locationHistory[0] = "0/0";
+  locationHistory[1] = "0/0";
 
   int uniqueCount = 1;
 
@@ -71,8 +72,11 @@ int main() {
         break;
       }
     }
-
-    locationHistory[i + 1] = nextLocation;
+    if (i >= data.length() - 2) {
+      locationHistory[i + 1] = nextLocation;
+    } else {
+      locationHistory[i + 2] = nextLocation;
+    }
   }
   display(uniqueCount);
 }
