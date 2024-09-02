@@ -53,6 +53,6 @@ int getDataFromFile(String fileName) {
 }
 
 int main() {
-  const int total = getDataFromFile("./2015/4.dat");
+  const int total = getDataFromFile("./2015/5.dat");
   display(total);
 }
